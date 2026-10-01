@@ -256,7 +256,15 @@ public class CadastroVendas extends javax.swing.JFrame {
 
     return true;
 }
+    
+    static double calcularValorTotal(double valor, int quantidade, double desconto) {
+    double valorTotal = valor * quantidade;
 
+    valorTotal = valorTotal - (valorTotal * (desconto / 100));
+
+    return valorTotal;
+}
+    
     private void cadastrarVenda() {
         int index = comboProdVendas.getSelectedIndex();
         Produto produtoSelecionado = Dados.listaProdutos.get(index);
@@ -264,8 +272,6 @@ public class CadastroVendas extends javax.swing.JFrame {
         int idProduto = produtoSelecionado.getIdProduto();
         double valor = produtoSelecionado.getValor();
         int quantidade = Integer.parseInt(txtQuantidade.getText());
-
-        double valorTotal = valor * quantidade;
 
         Promocao promo = (Promocao) comboPromocaoVendas.getSelectedItem();
 
@@ -275,7 +281,7 @@ public class CadastroVendas extends javax.swing.JFrame {
             desconto = promo.getPorcentagemDesc();
         }
 
-        valorTotal = valorTotal - (valorTotal * (desconto / 100));
+        double valorTotal = calcularValorTotal(valor, quantidade, desconto);
 
         produtoSelecionado.setQuantidadeEstoque(
                 produtoSelecionado.getQuantidadeEstoque() - quantidade
